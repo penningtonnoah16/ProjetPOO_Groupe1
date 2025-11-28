@@ -5,7 +5,7 @@ namespace cases{
 
     Case::Case(int x, int y) : x(x), y(y), etat(nullptr) {}
 
-    Case::Case(int x, int y, Cellule* etat) : x(x), y(y), etat(etat) {}
+    Case::Case(int x, int y, cellules::Cellule* etat) : x(x), y(y), etat(etat) {}
 
     Case::~Case() {
         delete etat;
@@ -19,11 +19,11 @@ namespace cases{
         return y;
     }
 
-    Cellule* Case::getEtat() const {
+    cellules::Cellule* Case::getEtat() const {
         return etat;
     }
 
-    void Case::setEtat(Cellule* nouvelleEtat) {
+    void Case::setEtat(cellules::Cellule* nouvelleEtat) {
         delete etat;
         etat = nouvelleEtat;
     }

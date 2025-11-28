@@ -1,21 +1,21 @@
 #pragma once
-#include "Cellule.h"
+#include "../Cellules_MVO/Cellule.h"
 
 namespace cases{
 
     class Case {
         private :
-            Cellule* etat;
+            cellules::Cellule* etat;
             int x;
             int y;
         public:
             Case(int, int);
-            Case(int, int, Cellule*);
+            Case(int, int, cellules::Cellule*);
             ~Case();
             int getX() const;
             int getY() const;
-            Cellule* getEtat() const;
-            void setEtat(Cellule*);
+            cellules::Cellule* getEtat() const;
+            void setEtat(cellules::Cellule*);
     
 };
 }
