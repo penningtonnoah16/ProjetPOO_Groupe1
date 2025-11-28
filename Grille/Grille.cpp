@@ -1,5 +1,6 @@
 #include "Grille.h"
 #include "../Cellules_MVO/Mort.h"
+#include "../Cellules_MVO/Vivant.h"
 
 namespace grille {
 
@@ -49,7 +50,7 @@ int Grille::compterVoisinsVivants(int x, int y) const {
     return count;
 }
 
-Grille(int l, int c, const std::vector<int>& etats)
+Grille::Grille(int l, int c, const std::vector<int>& etats)
     : lignes(l), colonnes(c)
 {
     cases.resize(lignes * colonnes);

@@ -1,32 +1,25 @@
 #include <iostream>
-
-#include "Case/Case.h"
-
-#include "Cellules_MVO/Cellule.h"
+#include "Grille/Grille.h"
 #include "Cellules_MVO/Vivant.h"
 #include "Cellules_MVO/Mort.h"
-#include "Cellules_MVO/Obstacle.h"
 
 int main() {
+    grille::Grille g(5, 5);
 
-    using namespace cases;
-    using namespace cellules;
+    std::cout << "Etat initial de (2,3) : " << g.estVivante(2, 3) << std::endl;
 
-    Cellule* c1 = new Vivant();
-    std::cout << "c1 est vivante ? " << c1->estVivante() << std::endl;
+    g.getCase(2, 3)->setEtat(new cellules::Vivant());
+    std::cout << "Etat de (2,3) après passage en vivant : " << g.estVivante(2, 3) << std::endl;
 
-    Cellule* c2 = new Mort();
-    std::cout << "c2 est vivante ? " << c2->estVivante() << std::endl;
+    std::cout << "Nombre de voisins vivants autour de (2,3) : " 
+              << g.compterVoisinsVivants(2, 3) << std::endl;
 
-    Cellule* c3 = new Obstacle();
-    std::cout << "c3 est vivante ? " << c3->estVivante() << std::endl;
+    g.getCase(2, 2)->setEtat(new cellules::Vivant());
+    g.getCase(2, 4)->setEtat(new cellules::Vivant());
+    g.getCase(1, 3)->setEtat(new cellules::Vivant());
 
-    Case maCase(2, 3, c1);
-    std::cout << "Case coords = (" << maCase.getX()
-            << "," << maCase.getY() << ")" << std::endl;
-
-    std::cout << "La cellule dans maCase est vivante ? "
-              << maCase.getEtat()->estVivante() << std::endl;
+    std::cout << "Nombre de voisins vivants après activation de 3 cellules : " 
+              << g.compterVoisinsVivants(2, 3) << std::endl;
 
     return 0;
 }

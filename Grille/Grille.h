@@ -4,26 +4,26 @@
 
 namespace grille {
 
-class Grille {
-private:
-    int lignes;
-    int colonnes;
-    std::vector<cases::Case*> cases;
+    class Grille {
+        private:
+            int lignes;
+            int colonnes;
+            std::vector<cases::Case*> cases;
 
-    int index(int x, int y) const { return x * colonnes + y; }
+            int index(int x, int y) const { return x * colonnes + y; }
 
-public:
-    Grille(int l, int c);
-    Grille(int, int, const std::vector<int>&)
-    ~Grille();
+        public:
+            Grille(int l, int c);
+            Grille(int, int, const std::vector<int>&);
+            ~Grille();
 
-    cases::Case* getCase(int x, int y) const;
-    bool estVivante(int x, int y) const;
+            cases::Case* getCase(int x, int y) const;
+            bool estVivante(int x, int y) const;
 
-    int compterVoisinsVivants(int x, int y) const;
+            int compterVoisinsVivants(int x, int y) const;
 
-    int getLignes() const;
-    int getColonnes() const;
-};
+            int getLignes() const;
+            int getColonnes() const;
+    };
 
 }
