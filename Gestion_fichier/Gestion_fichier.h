@@ -9,6 +9,6 @@ namespace gestion_fichier {
         ~GestionFichier() = default;
         void ecrireGrille(const grille::Grille&, const std::string&, int);
         static std::string creerDossierSortie(const std::string&);
-        static Grille::Grille* lireGrille(const std::string&)
+        static grille::Grille* lireGrille(const std::string&)
     };
 }
