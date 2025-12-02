@@ -1,13 +1,15 @@
 namespace app_graphique {
-    class App_graphique{
-        private : 
-            sf::RenderWindow window;
+    class App_graphique {
+        private :
+            sf::renderWindow window;
+            int cellSize;
             int gridHeight;
             int gridWidth;
-            int cellSize;
             Jeu& jeu;
         public :
+            App_graphique() = default();
+            ~App_graphique();
             void run();
-            void render(sf::RenderWindow);
+            void render();
     }
 }
