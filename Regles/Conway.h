@@ -1,8 +1,11 @@
-#include "Règle.h"
+#pragma once
+#include "Regle.h"
 
-namespace conway {
-    class Conway : public Règle {
-        public : 
-            Cellule* calculerEtatSuivant(const Grille&, int, int); 
-    }
+namespace regles {
+
+class Conway : public Regle {
+public:
+    cellules::Cellule* calculerEtatSuivant(const grille::Grille& g, int x, int y) const override;
+};
+
 }

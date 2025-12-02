@@ -1,53 +1,77 @@
 #include "Jeu.h"
-#include <string>
-#include "Gestion_fichier.h"
-#include "Grille.h"
+#include "../Gestion_fichier/Gestion_fichier.h"
+#include "../Regles/Conway.h"
 
 namespace jeu {
-    void charger(std::string){
-        grille = Gestion_fichier.lireGrille(cheminFichierEntree);
-        stable = 0;
-    }
 
+Jeu::Jeu(const std::string& chemin)
+    : grille(nullptr),
+      regle(new regles::Conway()),
+      cheminFichierEntree(chemin),
+      stable(false)
+{
+    grille = gestion_fichier::GestionFichier::lireGrille(chemin);
+}
 
+Jeu::~Jeu() {
+    delete grille;
+    delete regle;
+}
 
-    void iterer(){
-        int taille = Grille::get_lignes() * Grille::get_colonnes();
-        int i = 0;
-        vector<int> grille_temp;
-        for (i<taille){
-            i++
-            grille_temp.push_back(Conway::calculerEtatSuivant(grille, i%get_colonnes(), i/get_lignes()));
+void Jeu::charger(const std::string& path) {
+    cheminFichierEntree = path;
+    delete grille;
+    grille = gestion_fichier::GestionFichier::lireGrille(path);
+    stable = false;
+}
+
+void Jeu::iterer() {
+    int lignes   = grille->getLignes();
+    int colonnes = grille->getColonnes();
+
+    auto* nouvelle = new grille::Grille(lignes, colonnes);
+    bool meme = true;
+
+    for (int x = 0; x < lignes; ++x) {
+        for (int y = 0; y < colonnes; ++y) {
+            cellules::Cellule* nouveauEtat =
+                regle->calculerEtatSuivant(*grille, x, y);
+
+            bool ancienne = grille->estVivante(x, y);
+            bool nouvelleVal = nouveauEtat->estVivante();
+
+            if (ancienne != nouvelleVal)
+                meme = false;
+
+            nouvelle->getCase(x, y)->setEtat(nouveauEtat);
         }
     }
 
+    delete grille;
+    grille = nouvelle;
+    stable = meme;
+}
 
+bool Jeu::estStable() const {
+    return stable;
+}
 
-    bool estStable(){
-        if(grille == Gestion_fichier::lireGrille(cheminFichierEntree)){
-            return 1;
-        }
-        return 0;
+void Jeu::executerConsole(int n) {
+    std::string dossier =
+        gestion_fichier::GestionFichier::creerDossierSortie(
+            cheminFichierEntree + "_out");
+
+    gestion_fichier::GestionFichier::ecrireGrille(*grille, dossier, 0);
+
+    for (int i = 1; i <= n; ++i) {
+        iterer();
+        gestion_fichier::GestionFichier::ecrireGrille(*grille, dossier, i);
+        if (stable) break;
     }
+}
 
+grille::Grille* Jeu::getGrille() const {
+    return grille;
+}
 
-
-    void executerConsole(int iteration){
-        grille = Gestion_fichier::lireGrille();
-        std::string dossier = Gestion_fichier::creerDossierSortie();
-        int i = 0;
-        for (i<iteration){
-            i++;
-            Gestion_fichier::ecrireGrille(grille, dossier, i);
-            if (estStable == 1){
-                i = iteration;
-            }
-        }
-    }
-
-
-
-    const Grille& get_Grille(){
-        std::cout << grille << std::endl;
-    }
 }
