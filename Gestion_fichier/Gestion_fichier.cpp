@@ -1,5 +1,7 @@
 #include "Gestion_fichier.h"
 #include "../Grille/Grille.h"
+#include "../Cellules_MVO/Vivant.h"
+#include "../Cellules_MVO/Mort.h"
 #include <fstream>
 #include <filesystem>
 #include <iostream>
