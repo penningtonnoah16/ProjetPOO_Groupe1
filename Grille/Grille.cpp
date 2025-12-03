@@ -1,34 +1,39 @@
 #include "Grille.h"
 #include "../Cellules_MVO/Mort.h"
 #include "../Cellules_MVO/Vivant.h"
+#include "../Cellules_MVO/Obstacle.h"
 
 namespace grille {
 
-Grille::Grille(int l, int c)
-    : lignes(l), colonnes(c)
-{
+Grille::Grille(int l, int c) : lignes(l), colonnes(c) {
+
     cases.resize(lignes * colonnes);
 
     for (int x = 0; x < lignes; x++) {
         for (int y = 0; y < colonnes; y++) {
+
             cases[index(x, y)] = new cases::Case(x, y, new cellules::Mort());
         }
     }
 }
 
 Grille::~Grille() {
+
     for (auto c : cases) delete c;
 }
 
 cases::Case* Grille::getCase(int x, int y) const {
+
     return cases[index(x, y)];
 }
 
 bool Grille::estVivante(int x, int y) const {
+
     return cases[index(x, y)]->getEtat()->estVivante();
 }
 
 int Grille::compterVoisinsVivants(int x, int y) const {
+    
     int count = 0;
 
     for (int dx = -1; dx <= 1; dx++) {
@@ -50,9 +55,8 @@ int Grille::compterVoisinsVivants(int x, int y) const {
     return count;
 }
 
-Grille::Grille(int l, int c, const std::vector<int>& etats)
-    : lignes(l), colonnes(c)
-{
+Grille::Grille(int l, int c, const std::vector<int>& etats) : lignes(l), colonnes(c) {
+
     cases.resize(lignes * colonnes);
 
     for (int x = 0; x < lignes; x++) {
@@ -62,6 +66,8 @@ Grille::Grille(int l, int c, const std::vector<int>& etats)
 
             if (etats[idx] == 1)
                 cases[idx] = new cases::Case(x, y, new cellules::Vivant());
+            if (etats[idx] == 2)
+                cases[idx] = new cases::Case(x, y, new cellules::Obstacle());
             else
                 cases[idx] = new cases::Case(x, y, new cellules::Mort());
         }
@@ -69,6 +75,7 @@ Grille::Grille(int l, int c, const std::vector<int>& etats)
 }
 
 int Grille::getLignes() const { return lignes; }
+
 int Grille::getColonnes() const { return colonnes; }
 
 }

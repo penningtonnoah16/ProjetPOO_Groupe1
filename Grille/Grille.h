@@ -3,8 +3,8 @@
 #include <vector>
 
 namespace grille {
-
     class Grille {
+
         private:
             int lignes;
             int colonnes;
@@ -19,9 +19,7 @@ namespace grille {
 
             cases::Case* getCase(int x, int y) const;
             bool estVivante(int x, int y) const;
-
             int compterVoisinsVivants(int x, int y) const;
-
             int getLignes() const;
             int getColonnes() const;
     };

@@ -2,6 +2,7 @@
 #include "../Grille/Grille.h"
 #include "../Cellules_MVO/Vivant.h"
 #include "../Cellules_MVO/Mort.h"
+#include "../Cellules_MVO/Obstacle.h"
 #include <fstream>
 #include <filesystem>
 #include <iostream>
@@ -10,41 +11,65 @@
 namespace gestion_fichier {
 
     void GestionFichier::ecrireGrille(const grille::Grille& grille, const std::string& chemin, int numero) {
-        std::ofstream fichier(chemin + "/grille_" + std::to_string(numero) + ".txt");
-        if (!fichier.is_open()) {
-            std::cerr << "Erreur lors de l'ouverture du fichier pour écriture: " << chemin << std::endl;
-            return;
-        }
 
-        int lignes = grille.getLignes();
-        int colonnes = grille.getColonnes();
+    std::filesystem::path p(chemin);
 
-        fichier << lignes << " " << colonnes << std::endl;
+    std::filesystem::path filePath;
 
-        for (int i = 0; i < lignes; ++i) {
-            for (int j = 0; j < colonnes; ++j) {
-                fichier << (grille.getCase(i, j)->getEtat()->estVivante() ? 1 : 0);
-                if (j < colonnes - 1) {
-                    fichier << " ";
-                }
-            }
-            fichier << std::endl;
-        }
+    if (std::filesystem::is_directory(p)) {
 
-        fichier.close();
+        filePath = p / (p.parent_path().stem().string() + std::to_string(numero) + ".txt");
     }
-    std::string GestionFichier::creerDossierSortie(const std::string& nomDossier) {
-        std::filesystem::path chemin(nomDossier);
-        if (!std::filesystem::exists(chemin)) {
-            if (!std::filesystem::create_directory(chemin)) {
-                std::cerr << "Erreur lors de la création du dossier: " << nomDossier << std::endl;
-            }
-        }
-        return chemin.string();
+    else {
+
+        filePath = p;
     }
+
+    std::ofstream fichier(filePath);
+
+    if (!fichier.is_open()) {
+
+        std::cerr << "Erreur d'ouverture : " << filePath << "\n";
+        return;
+    }
+
+    int lignes = grille.getLignes();
+    int colonnes = grille.getColonnes();
+
+    fichier << lignes << " " << colonnes << "\n";
+
+    for (int i = 0; i < lignes; ++i) {
+        for (int j = 0; j < colonnes; ++j) {
+
+            fichier << (
+                dynamic_cast<cellules::Vivant*>(grille.getCase(i, j)->getEtat()) ? 1 :
+                dynamic_cast<cellules::Obstacle*>(grille.getCase(i, j)->getEtat()) ? 2 : 0
+            );
+            if (j < colonnes - 1) fichier << " ";
+        }
+        fichier << "\n";
+    }
+}
+
+    std::string GestionFichier::creerDossierSortie(const std::string& fichier){
+
+        std::filesystem::path p(fichier);
+        std::string nomSansExtension = p.stem().string();
+        std::string dossier = nomSansExtension + "_out";
+
+        if (!std::filesystem::exists(dossier)) {
+            std::filesystem::create_directory(dossier);
+        }
+
+        return dossier;
+}
+
     grille::Grille* GestionFichier::lireGrille(const std::string& chemin) {
+
         std::ifstream fichier(chemin);
+
         if (!fichier.is_open()) {
+
             std::cerr << "Erreur lors de l'ouverture du fichier pour lecture: " << chemin << std::endl;
             return nullptr;
         }
@@ -56,13 +81,21 @@ namespace gestion_fichier {
 
         for (int i = 0; i < lignes; ++i) {
             for (int j = 0; j < colonnes; ++j) {
+
                 int valeur;
                 fichier >> valeur;
-                if (valeur == 1)
-                    grille->getCase(i, j)->setEtat(new cellules::Vivant());
-                else
-                    grille->getCase(i, j)->setEtat(new cellules::Mort());
+                if (valeur == 1){
 
+                    grille->getCase(i, j)->setEtat(new cellules::Vivant());
+                }
+                else if (valeur == 2){
+
+                    grille->getCase(i, j)->setEtat(new cellules::Obstacle());
+                }
+                else {
+                    
+                    grille->getCase(i, j)->setEtat(new cellules::Mort());
+                }
             }
         }
 
