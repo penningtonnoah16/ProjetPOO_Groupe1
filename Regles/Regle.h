@@ -3,12 +3,10 @@
 #include "../Cellules_MVO/Cellule.h"
 
 namespace regles {
+    class Regle {
 
-class Regle {
-public:
-    virtual ~Regle() = default;
-    virtual cellules::Cellule* calculerEtatSuivant(const grille::Grille& g,
-                                                   int x, int y) const = 0;
-};
-
+        public:
+            virtual ~Regle() = default;
+            virtual cellules::Cellule* calculerEtatSuivant(const grille::Grille& g, int x, int y) const = 0;
+    };
 }

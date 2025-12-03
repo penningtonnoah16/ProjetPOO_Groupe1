@@ -5,23 +5,27 @@
 
 namespace jeu {
 
-class Jeu {
-public:
-    explicit Jeu(const std::string& cheminEntree);
-    ~Jeu();
+    class Jeu {
 
-    void charger(const std::string& path);
-    void iterer();
-    bool estStable() const;
-    void executerConsole(int n);
+        private:
+            grille::Grille* grille;
+            regles::Regle* regle;
+            std::string fichierEntree;
+            bool stable;
 
-    grille::Grille* getGrille() const;
+        public:
+            Jeu(const std::string& fichier);
+            ~Jeu();
 
-private:
-    grille::Grille* grille;
-    regles::Regle* regle;
-    std::string cheminFichierEntree;
-    bool stable;
-};
+            void charger(const std::string& fichier);
+            void setGrille(grille::Grille* g);
+
+            void iterer();
+            bool estStable() const;
+
+            void executerConsole(int n);
+
+            grille::Grille* getGrille() const;
+    };
 
 }

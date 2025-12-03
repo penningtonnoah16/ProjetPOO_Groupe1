@@ -7,29 +7,39 @@
 
 namespace regles {
 
-cellules::Cellule* Conway::calculerEtatSuivant(const grille::Grille& g,
-                                               int x, int y) const {
-    cases::Case* c = g.getCase(x, y);
-    cellules::Cellule* etat = c->getEtat();
+    cellules::Cellule* Conway::calculerEtatSuivant(const grille::Grille& g, int x, int y) const {
 
-    if (dynamic_cast<cellules::Obstacle*>(etat) != nullptr) {
-        return new cellules::Obstacle();
+        cases::Case* c = g.getCase(x, y);
+        cellules::Cellule* etat = c->getEtat();
+
+        if (dynamic_cast<cellules::Obstacle*>(etat) != nullptr) {
+
+            return new cellules::Obstacle();
+        }
+
+        int voisins = g.compterVoisinsVivants(x, y);
+        bool vivante = etat->estVivante();
+
+        if (vivante) {
+            if (voisins == 2 || voisins == 3){
+                
+                return new cellules::Vivant();
+            }
+            else {
+
+                return new cellules::Mort();
+            }
+        } 
+        else {
+            if (voisins == 3){
+
+                return new cellules::Vivant();
+            }
+            else{
+                
+                return new cellules::Mort();
+            }
+        }
     }
-
-    int voisins = g.compterVoisinsVivants(x, y);
-    bool vivante = etat->estVivante();
-
-    if (vivante) {
-        if (voisins == 2 || voisins == 3)
-            return new cellules::Vivant();
-        else
-            return new cellules::Mort();
-    } else {
-        if (voisins == 3)
-            return new cellules::Vivant();
-        else
-            return new cellules::Mort();
-    }
-}
 
 }
