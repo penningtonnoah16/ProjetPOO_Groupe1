@@ -14,7 +14,7 @@ namespace app_graphique {
         public:
             App_graphique(jeu::Jeu& j, int cell);
 
-            void setDelai(int ms) { delaiMs = ms; }
+            void setDelai(int ms);
             void render();
             void run(int iterations);
     };
