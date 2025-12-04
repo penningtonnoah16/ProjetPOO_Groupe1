@@ -7,7 +7,7 @@ namespace jeu {
 Jeu::Jeu(const std::string& fichier) : grille(nullptr), regle(new regles::Conway()), fichierEntree(fichier), stable(false) {
     
     if (fichier != "") {
-        
+
         grille = gestion_fichier::GestionFichier::lireGrille(fichier);
     }
 }
@@ -71,9 +71,14 @@ void Jeu::executerConsole(int n) {
     gestion_fichier::GestionFichier::ecrireGrille(*grille, dossier, 0);
 
     for (int i = 1; i <= n; i++) {
+
         iterer();
         gestion_fichier::GestionFichier::ecrireGrille(*grille, dossier, i);
-        if (stable) break;
+
+        if (stable) {
+            
+            break;
+        }
     }
 }
 

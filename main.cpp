@@ -57,8 +57,8 @@ int main() {
                 std::cout << "Aucune grille chargee.\n";
             } else {
                 editeur::Editeur::lancer(j->getGrille());
-                j->setGrille(j->getGrille());
                 std::cout << "Edition terminee.\n";
+
             }
         }
 
