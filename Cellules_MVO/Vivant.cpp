@@ -2,7 +2,7 @@
 
 namespace cellules {
     
-    bool Vivant::estVivante() const {
+    bool Vivant::estVivante() const { // Une cellule vivante est vivante
         
         return true;
     }
