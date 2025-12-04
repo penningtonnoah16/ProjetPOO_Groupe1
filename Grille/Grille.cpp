@@ -22,6 +22,10 @@ Grille::~Grille() {
     for (auto c : cases) delete c;
 }
 
+int Grille::index(int x, int y) const {  // Calculer l'index dans le vecteur à partir des coordonnées 2D
+    return x * colonnes + y;  // Formule pour convertir les coordonnées 2D en index 1D
+}
+
 cases::Case* Grille::getCase(int x, int y) const { // Récupérer une case donnée
 
     return cases[index(x, y)]; // Utiliser l'index pour accéder à la case

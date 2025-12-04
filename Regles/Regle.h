@@ -7,6 +7,6 @@ namespace regles {
 
         public:
             virtual ~Regle() = default;
-            virtual cellules::Cellule* calculerEtatSuivant(const grille::Grille& g, int x, int y) const = 0;
+            virtual cellules::Cellule* calculerEtatSuivant(const grille::Grille&, int, int) const = 0;
     };
 }

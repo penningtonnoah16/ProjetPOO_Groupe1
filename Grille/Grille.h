@@ -10,7 +10,7 @@ namespace grille {
             int colonnes;
             std::vector<cases::Case*> cases;
 
-            int index(int x, int y) const { return x * colonnes + y; }
+            int index(int x, int y) const;
 
         public:
             Grille(int l, int c);
