@@ -4,6 +4,6 @@ namespace editeur {
     class Editeur {
         
         public:
-            static void lancer(grille::Grille* g);
+            static void lancer(grille::Grille*);
         };
 }
