@@ -12,10 +12,10 @@ namespace app_graphique {
             int delaiMs;
 
         public:
-            App_graphique(jeu::Jeu& j, int cell);
+            App_graphique(jeu::Jeu&, int);
 
-            void setDelai(int ms);
+            void setDelai(int);
             void render();
-            void run(int iterations);
+            void run(int);
     };
 }

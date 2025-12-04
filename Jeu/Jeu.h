@@ -14,16 +14,16 @@ namespace jeu {
             bool stable;
 
         public:
-            Jeu(const std::string& fichier);
+            Jeu(const std::string&);
             ~Jeu();
 
-            void charger(const std::string& fichier);
-            void setGrille(grille::Grille* g);
+            void charger(const std::string&);
+            void setGrille(grille::Grille*);
 
             void iterer();
             bool estStable() const;
 
-            void executerConsole(int n);
+            void executerConsole(int);
 
             grille::Grille* getGrille() const;
     };

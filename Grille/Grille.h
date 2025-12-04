@@ -13,13 +13,13 @@ namespace grille {
             int index(int x, int y) const;
 
         public:
-            Grille(int l, int c);
+            Grille(int, int);
             Grille(int, int, const std::vector<int>&);
             ~Grille();
 
-            cases::Case* getCase(int x, int y) const;
-            bool estVivante(int x, int y) const;
-            int compterVoisinsVivants(int x, int y) const;
+            cases::Case* getCase(int, int) const;
+            bool estVivante(int, int) const;
+            int compterVoisinsVivants(int, int) const;
             int getLignes() const;
             int getColonnes() const;
     };
