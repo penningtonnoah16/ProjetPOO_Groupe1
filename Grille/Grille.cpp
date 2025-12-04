@@ -5,14 +5,14 @@
 
 namespace grille {
 
-Grille::Grille(int l, int c) : lignes(l), colonnes(c) {
+Grille::Grille(int l, int c) : lignes(l), colonnes(c) { // Grille vide initialisée à morte
 
-    cases.resize(lignes * colonnes);
+    cases.resize(lignes * colonnes); // Allouer l'espace pour les cases
 
     for (int x = 0; x < lignes; x++) {
         for (int y = 0; y < colonnes; y++) {
 
-            cases[index(x, y)] = new cases::Case(x, y, new cellules::Mort());
+            cases[index(x, y)] = new cases::Case(x, y, new cellules::Mort()); // Initialiser chaque case à morte
         }
     }
 }
@@ -22,31 +22,31 @@ Grille::~Grille() {
     for (auto c : cases) delete c;
 }
 
-cases::Case* Grille::getCase(int x, int y) const {
+cases::Case* Grille::getCase(int x, int y) const { // Récupérer une case donnée
 
-    return cases[index(x, y)];
+    return cases[index(x, y)]; // Utiliser l'index pour accéder à la case
 }
 
 bool Grille::estVivante(int x, int y) const {
 
-    return cases[index(x, y)]->getEtat()->estVivante();
+    return cases[index(x, y)]->getEtat()->estVivante(); // Vérifier si la cellule est vivante
 }
 
 int Grille::compterVoisinsVivants(int x, int y) const {
     
     int count = 0;
 
-    for (int dx = -1; dx <= 1; dx++) {
-        for (int dy = -1; dy <= 1; dy++) {
-            if (dx == 0 && dy == 0) continue;
+    for (int dx = -1; dx <= 1; dx++) { // Parcourir les voisins
+        for (int dy = -1; dy <= 1; dy++) { // Parcourir les voisins
+            if (dx == 0 && dy == 0) continue; // Ignorer la cellule elle-même si (dx,dy)=(0,0)
 
-            int nx = x + dx;
-            int ny = y + dy;
+            int nx = x + dx; // Coordonnée x du voisin
+            int ny = y + dy; // Coordonnée y du voisin
 
             if (nx >= 0 && nx < lignes &&
-                ny >= 0 && ny < colonnes) {
+                ny >= 0 && ny < colonnes) { // Vérifier les limites
 
-                if (cases[index(nx, ny)]->getEtat()->estVivante())
+                if (cases[index(nx, ny)]->getEtat()->estVivante()) // Si le voisin est vivant
                     count++;
             }
         }
@@ -55,21 +55,27 @@ int Grille::compterVoisinsVivants(int x, int y) const {
     return count;
 }
 
-Grille::Grille(int l, int c, const std::vector<int>& etats) : lignes(l), colonnes(c) {
+Grille::Grille(int l, int c, const std::vector<int>& etats) : lignes(l), colonnes(c) { // Grille initialisée avec des états donnés
 
-    cases.resize(lignes * colonnes);
+    cases.resize(lignes * colonnes); // Allouer l'espace pour les cases
 
-    for (int x = 0; x < lignes; x++) {
-        for (int y = 0; y < colonnes; y++) {
+    for (int x = 0; x < lignes; x++) { // Parcourir les lignes
+        for (int y = 0; y < colonnes; y++) { // Parcourir les colonnes
 
-            int idx = index(x, y);
+            int idx = index(x, y); // Calculer l'index dans le vecteur
 
-            if (etats[idx] == 1)
+            if (etats[idx] == 1){ // Cellule vivante
+
                 cases[idx] = new cases::Case(x, y, new cellules::Vivant());
-            if (etats[idx] == 2)
+            }
+            else if (etats[idx] == 2){ // Cellule obstacle
+
                 cases[idx] = new cases::Case(x, y, new cellules::Obstacle());
-            else
+            }
+            else { // Cellule morte
+
                 cases[idx] = new cases::Case(x, y, new cellules::Mort());
+            }
         }
     }
 }
