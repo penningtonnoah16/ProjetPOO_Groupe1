@@ -64,6 +64,13 @@ namespace editeur {
 
         enableRawMode();
 
+        if (L == 0 || C == 0) { // Grille vide
+
+            disableRawMode();
+            std::cout << "Grille vide, impossible d'editer.\n";
+            return;
+        }
+
         while (true) {
 
             std::cout << "\033[H\033[J"; // Effacer l'écran

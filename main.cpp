@@ -140,6 +140,7 @@ int main() {
         }
 
         else if (choix ==8) {
+
             lancerTestsUnitaires();
         }
 
@@ -148,9 +149,11 @@ int main() {
             quitter = true;
         }
 
-        else {
-
-            std::cout << "Choix invalide.\n";
+        if (std::cin.fail()) {
+            std::cin.clear();               // reset le flag d’erreur
+            std::cin.ignore(10000, '\n');   // vide le buffer
+            std::cout << "Entrée invalide. Veuillez entrer un nombre entre 1 et 9.\n";
+            continue;                       // retourne au début du while
         }
     }
 
