@@ -20,7 +20,7 @@ namespace app_graphique {
         int lignes = g->getLignes();
         int colonnes = g->getColonnes();
 
-        window.clear(); // Effacer la fenêtre
+        window.clear(sf::Color(210, 210, 210));
 
         sf::RectangleShape cell(sf::Vector2f(cellSize - 1, cellSize - 1)); // Taille de chaque cellule
 
@@ -56,14 +56,20 @@ namespace app_graphique {
 
     void App_graphique::run(int iterations) { // Lancer la simulation graphique
 
+        // Fermer la fenêtre si elle était déjà ouverte
+        if (window.isOpen()) {
+            window.close();
+        }
+
         grille::Grille* g = jeu.getGrille();
         if (!g) return;
 
         int lignes = g->getLignes();
         int colonnes = g->getColonnes();
 
-        window.create( // Créer la fenêtre
-            sf::VideoMode(std::max(800, colonnes * cellSize), std::max(600, lignes * cellSize)), // Taille minimale de 800x600
+        // Créer la fenêtre
+        window.create(
+            sf::VideoMode(std::max(800, colonnes * cellSize), std::max(600, lignes * cellSize)),
             "Jeu de la Vie - Simulation graphique"
         );
 
@@ -75,29 +81,31 @@ namespace app_graphique {
             sf::Event event; // Gérer les événements
 
             while (window.pollEvent(event)) { // Parcourir les événements
-                if (event.type == sf::Event::Closed){ // Fermer la fenêtre
-
+                if (event.type == sf::Event::Closed) { // Fermer la fenêtre
                     window.close();
                 }
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){ // Fermer la fenêtre avec Echap
-
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) { // Echap
                     window.close();
                 }
             }
 
             if (clock.getElapsedTime().asMilliseconds() > delaiMs) { // Vérifier le délai
-
                 jeu.iterer();
                 currentIteration++;
                 clock.restart();
             }
 
             if (jeu.estStable()) { // Arrêter si la grille est stable
-
                 window.close();
             }
 
             render();
         }
+
+        // S'assurer que la fenêtre est bien fermée à la fin
+        if (window.isOpen()) {
+            window.close();
+        }
     }
+
 }

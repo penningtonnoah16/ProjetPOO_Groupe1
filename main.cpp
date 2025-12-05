@@ -6,6 +6,7 @@
 #include "Cellules_MVO/Mort.h"
 #include "Cellules_MVO/Obstacle.h"
 #include "interface_graphique/App_graphique.h"
+#include "test_unitaires/test_unitaires.h"
 
 void afficherMenu() { // Affiche le menu principal
     std::cout << "\n===== MENU PRINCIPAL =====\n";
@@ -16,7 +17,8 @@ void afficherMenu() { // Affiche le menu principal
     std::cout << "5. Sauvegarder la grille dans un fichier\n";
     std::cout << "6. Afficher la grille\n";
     std::cout << "7. Lancer l'interface graphique\n";
-    std::cout << "8. Quitter\n";
+    std::cout << "8. Réaliser les test unitaires\n";
+    std::cout << "9. Quitter\n";
     std::cout << "Votre choix : ";
 }
 
@@ -137,7 +139,11 @@ int main() {
             }
         }
 
-        else if (choix == 8) {
+        else if (choix ==8) {
+            lancerTestsUnitaires();
+        }
+
+        else if (choix == 9) {
 
             quitter = true;
         }

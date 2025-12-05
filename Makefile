@@ -20,7 +20,8 @@ SRCS = main.cpp \
        Cellules_MVO/Mort.cpp \
        Cellules_MVO/Vivant.cpp \
        Cellules_MVO/Obstacle.cpp \
-       editeur/editeur.cpp
+       editeur/editeur.cpp \
+       test_unitaires/test_unitaires.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
