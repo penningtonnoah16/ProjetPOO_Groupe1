@@ -82,20 +82,32 @@ namespace app_graphique {
 
             while (window.pollEvent(event)) { // Parcourir les événements
                 if (event.type == sf::Event::Closed) { // Fermer la fenêtre
+
                     window.close();
                 }
+
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) { // Echap
+
                     window.close();
+                }
+
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space && delaiMs == 9999) { // Espace pour itérer manuellement
+
+                    jeu.iterer();   // Itérer la grille
+                    currentIteration++;// Incrémenter le compteur
+                    clock.restart(); // Redémarrer l'horloge
                 }
             }
 
             if (clock.getElapsedTime().asMilliseconds() > delaiMs) { // Vérifier le délai
+
                 jeu.iterer();
                 currentIteration++;
                 clock.restart();
             }
 
             if (jeu.estStable()) { // Arrêter si la grille est stable
+
                 window.close();
             }
 
@@ -104,6 +116,7 @@ namespace app_graphique {
 
         // S'assurer que la fenêtre est bien fermée à la fin
         if (window.isOpen()) {
+            
             window.close();
         }
     }

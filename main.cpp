@@ -133,8 +133,21 @@ int main() {
                 std::cout << "Nombre d'iterations a afficher graphiquement : ";
                 std::cin >> iterations;
 
+                std::cout << "avec delai ou avec input utilisateur ? (d/i) : ";
+                std::string mode;
+                std::cin >> mode;
+
                 app_graphique::App_graphique app(*j, 20);
-                app.setDelai(5000);
+
+                if (mode == "d") {
+
+                    app.setDelai(5000);
+                }
+                else {
+
+                    app.setDelai(9999); // mode input utilisateur
+                }
+
                 app.run(iterations);
             }
         }
