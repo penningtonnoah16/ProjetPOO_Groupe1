@@ -47,6 +47,23 @@ int Grille::compterVoisinsVivants(int x, int y) const {
             int nx = x + dx; // Coordonnée x du voisin
             int ny = y + dy; // Coordonnée y du voisin
 
+            if (nx<0){ // Gestion du rebord torique
+
+                nx+=lignes; // Rebondir à l'autre côté
+            }
+            if (ny<0){
+
+                ny+=colonnes;
+            }
+            if (nx>=lignes){
+
+                nx-=lignes;
+            }
+            if (ny>=colonnes){
+
+                ny-=colonnes;
+            }
+
             if (nx >= 0 && nx < lignes &&
                 ny >= 0 && ny < colonnes) { // Vérifier les limites
 
