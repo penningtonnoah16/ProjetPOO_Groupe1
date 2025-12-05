@@ -1,81 +1,105 @@
-# Projet POO : le jeu de la vie
+# Projet POO – Jeu de la vie (C++)
 
-## Présentation du projet
-Ce projet implémente une version orientée objet du jeu de la vie de Conway en C++. L'application propose plusieurs modes :
+## Présentation
 
-- Simulation console  
-- Édition manuelle de la grille via un éditeur textuel  
-- Simulation graphique via SFML  
-- Lecture et écriture de grilles depuis et vers des fichiers  
+Ce projet implémente une version orientée objet du **Jeu de la vie** de John Conway.  
+Il propose une architecture modulaire organisée autour de classes représentant :
 
-Un futur fichier `main_tests.cpp` permettra l'intégration de tests unitaires pour valider le code.
+- les cellules (vivantes, mortes, obstacles),  
+- les cases,
+- la grille,
+- et le jeu lui-même (gestion des règles et évolution).
 
-## Contenu du dépôt et architecture
+Le projet inclut :
+- une **interface console complète**,  
+- un **éditeur de grille interactif**,  
+- une **interface graphique SFML**,  
+- un **système de sauvegarde/chargement de grilles**,  
+- des **tests unitaires intégrés** directement dans le code (pas de main séparé).
+
+---
+
+## Fonctionnalités
+
+### Gestion du jeu
+- Initialisation d’une grille vide ou chargée depuis fichier  
+- Application automatisée des règles de Conway  
+- Détection de stabilité / oscillation  
+- Exécution étape par étape ou automatique  
+- Affichage de la grille en console
+
+### Éditeur de grille (mode console)
+- Déplacement d’un curseur sur la grille  
+- Ajout / suppression de cellules vivantes  
+- Placement d’obstacles  
+- Sauvegarde directe depuis l’éditeur  
+- Visualisation instantanée des modifications
+
+### Système de fichiers
+- Chargement d’une grille depuis fichier texte  
+- Sauvegarde d’une grille existante  
+- Validation du format des fichiers  
+- Gestion d’erreurs (format incorrect, taille invalide, etc.)
+
+### Tests unitaires intégrés
+Les tests unitaires sont **directement intégrés au code** pour vérifier :
+- la création de la grille,  
+- l’évolution correcte des cellules,  
+- la gestion des obstacles,  
+- les règles du jeu,  
+- la lecture/écriture des fichiers.
+
+### Interface graphique (SFML)
+- Représentation visuelle de la grille  
+- Bouton “Suivant” / “Lancer la simulation”  
+- Animation fluide des itérations  
+- Affichage des cellules vivantes, mortes et obstacles  
+- Interaction utilisateur : choix de mode / exit graphique
+
+### Menu principal (console)
+Depuis `main.cpp`, l’utilisateur peut :
+- créer une nouvelle grille  
+- charger une grille depuis fichier  
+- éditer une grille  
+- lancer la simulation (console)  
+- lancer la simulation (graphique SFML)  
+- sauvegarder  
+- quitter  
+
+---
+
+## Structure du projet
 
 ProjetPOO_Groupe1/
-- ├── main.cpp # point d’entrée principal (menu console et graphique)
-- ├── main_tests.cpp # (à venir) Main dédié aux tests unitaires
-- ├── Cellules_MVO/ # modules représentant les états des cellules (Vivante, Morte, Obstacle)
-- ├── grille/ # module Grille et Case
-- ├── Jeu/ # classe Jeu (gestion de la simulation, grille, règles)
-- ├── Gestion_fichier/ # lecture/écriture de grilles
+- ├── Cellules_MVO/ # états des cellules : Morte, Vivante, Obstacle
+- ├── Grille/ # classes Grille et Case
+- ├── Jeu/ # logique du jeu et règles
+- ├── Gestion_fichier/ # lecture/écriture de fichiers .txt
 - ├── editeur/ # éditeur de grille en mode console
-- ├── interface_graphique/ # App_graphique : interface graphique avec SFML
-- └── … (autres modules si besoin)
+- ├── interface_graphique/ # interface avec SFML
+- ├── test_unitaires/ # tests intégrés aux différents modules
+- ├── main.cpp # point d’entrée du programme
+- ├── Makefile # compilation automatique
+- └── README.md # documentation
 
-### Principaux composants
+---
 
-- **Grille / Case / Cellule** : représentation de la grille, des cellules, et de leur état (vivante, morte, obstacle).  
-- **Jeu** : gère la grille courante, la règle de Conway, les itérations et la stabilité.  
-- **Gestion_fichier** : lecture et écriture de fichiers texte pour les grilles.  
-- **Editeur** : permet de modifier manuellement la grille dans la console via un curseur et des commandes clavier.  
-- **App_graphique** : affiche graphiquement la grille et simule visuellement l'évolution.  
-- **main** : menu textuel permettant de choisir l’action (charger, créer, éditer, simuler, sauvegarder, afficher, interface graphique, quitter).
+## Compilation & exécution
 
-## Prérequis et compilation
+Le projet inclut un **Makefile**, donc aucune commande manuelle compliquée n’est nécessaire.
 
-- Compilateur C++ (C++11 ou supérieur)  
-- Pour le mode graphique : SFML installée ([https://www.sfml-dev.org](https://www.sfml-dev.org))
-
-### Exemple de compilation (Linux / g++) :
-
+### Compiler
 ```bash
-g++ -std=c++17 -I include/ -o JeuDeLaVie main.cpp ... -lsfml-graphics -lsfml-window -lsfml-system
-(À adapter selon l’organisation des fichiers, Makefile ou CMake possible.)
+make
+```
+### Lancer le programme
+```bash
+./main
+```
 
-Utilisation
-Après compilation, exécuter le binaire :
+## Auteurs
 
-Le menu principal s'affiche.
-
-Charger une grille depuis un fichier ou créer une grille vide.
-
-Éditer la grille manuellement si souhaité.
-
-Simuler en console ou lancer l’interface graphique.
-
-Sauvegarder la grille dans un fichier.
-
-Afficher la grille dans la console.
-
-Tests unitaires
-Un nouveau fichier main_tests.cpp permettra de réaliser des tests unitaires :
-
-Compilation et exécution des tests à prévoir
-
-Modules testés : Grille, règles, etc.
-
-Couverture des tests à déterminer
-
-Contribution et roadmap
-À venir :
-
-Intégration complète des tests unitaires
-
-Documentation plus détaillée (exemples de fichiers grille, captures d’écran interface graphique)
-
-Amélioration du code et modularité
-
-Système de configuration avancé et sauvegarde multiple
-
-Pour contribuer, fork le projet, crée une branche, puis soumets une pull request.
+Projet réalisé par :
+Blandeau Adrien
+Pennington Noah
+CPI A2 INFO — 2025/2026
