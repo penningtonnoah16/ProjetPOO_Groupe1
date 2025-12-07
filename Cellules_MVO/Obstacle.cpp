@@ -2,7 +2,7 @@
 
 namespace cellules {
 
-    bool Obstacle::estVivante() const { // Une cellule obstacle n'est pas vivante
+    bool Obstacle::estVivante() const {
         
         return false;
     }

@@ -20,7 +20,7 @@ namespace app_graphique {
         int lignes = g->getLignes();
         int colonnes = g->getColonnes();
 
-        window.clear(sf::Color(210, 210, 210));
+        window.clear(sf::Color(200, 200, 200));
 
         sf::RectangleShape cell(sf::Vector2f(cellSize - 1, cellSize - 1)); // Taille de chaque cellule
 
@@ -34,7 +34,7 @@ namespace app_graphique {
 
                 if (dynamic_cast<cellules::Vivant*>(etat)){ // Cellule vivante
 
-                    cell.setFillColor(sf::Color::White);
+                    cell.setFillColor(sf::Color::Black);
                 }
                 else if (dynamic_cast<cellules::Obstacle*>(etat)){ // Cellule obstacle
 
@@ -42,7 +42,7 @@ namespace app_graphique {
                 }
                 else { // Cellule morte
 
-                    cell.setFillColor(sf::Color::Black);
+                    cell.setFillColor(sf::Color::White);
                 }
 
                 cell.setPosition(offsetX + j * cellSize, offsetY + i * cellSize); // Positionner la cellule
@@ -98,12 +98,13 @@ namespace app_graphique {
                     clock.restart(); // Redémarrer l'horloge
                 }
             }
+            if (delaiMs != 9999){
+                if (clock.getElapsedTime().asMilliseconds() > delaiMs) { // Vérifier le délai
 
-            if (clock.getElapsedTime().asMilliseconds() > delaiMs) { // Vérifier le délai
-
-                jeu.iterer();
-                currentIteration++;
-                clock.restart();
+                    jeu.iterer();
+                    currentIteration++;
+                    clock.restart();
+                }
             }
 
             if (jeu.estStable()) { // Arrêter si la grille est stable

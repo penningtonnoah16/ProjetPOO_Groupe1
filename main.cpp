@@ -143,9 +143,14 @@ int main() {
 
                     app.setDelai(5000);
                 }
+                else if (mode == "i") {
+                    std::cout << "Appuyez sur ESPACE pour iterer manuellement.\n";
+                    app.setDelai(9999); // mode input utilisateur
+                }
                 else {
 
-                    app.setDelai(9999); // mode input utilisateur
+                    std::cout << "Mode invalide. Utilisation du mode par defaut (input utilisateur).\n";
+                    app.setDelai(9999);
                 }
 
                 app.run(iterations);
